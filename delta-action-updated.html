@@ -1,0 +1,664 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三角洲行动 - 图片展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e53e3e', // 游戏主题红色
+                        secondary: '#1a202c', // 深色背景
+                        accent: '#4299e1', // 强调色
+                        dark: '#171923', // 更深的背景色
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif']
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .image-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+            .image-card {
+                transition: all 0.3s ease;
+            }
+            .image-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+            }
+            .img-zoom {
+                overflow: hidden;
+            }
+            .img-zoom img {
+                transition: transform 0.5s ease;
+            }
+            .img-zoom:hover img {
+                transform: scale(1.1);
+            }
+            .loader {
+                border-top-color: theme('colors.primary');
+                animation: spinner 0.6s linear infinite;
+            }
+            @keyframes spinner {
+                to { transform: rotate(360deg); }
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-secondary text-gray-100 min-h-screen">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-dark/90 backdrop-blur-md shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <!-- 三角洲行动图标 -->
+                <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/083d7b2066794a0d97b6173a18d61d1d~tplv-a9rns2rl98-image.image?rcl=2025092218093570E469AA6BFA7E8AC55D&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759140576&amp;x-signature=CSKmISD2vSgUX3fb4OEb3QbCXAc%3D" alt="三角洲行动图标" class="w-10 h-10 rounded-full">
+                <h1 class="text-2xl font-bold font-display tracking-wider">三角洲行动</h1>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="hover:text-primary transition-colors">首页</a>
+                <a href="#gallery" class="text-primary font-medium">图片展示</a>
+                <a href="#about" class="hover:text-primary transition-colors">关于游戏</a>
+                <a href="#" class="hover:text-primary transition-colors">官方网站</a>
+            </div>
+            
+            <button id="mobileMenuBtn" class="md:hidden text-xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="md:hidden hidden bg-dark/95 backdrop-blur-md border-t border-gray-800">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#" class="py-2 hover:text-primary transition-colors">首页</a>
+                <a href="#gallery" class="py-2 text-primary font-medium">图片展示</a>
+                <a href="#about" class="py-2 hover:text-primary transition-colors">关于游戏</a>
+                <a href="#" class="py-2 hover:text-primary transition-colors">官方网站</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <header class="relative h-[70vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/13a6595830714f5788363d3ceba1d291~tplv-a9rns2rl98-image.image?rcl=2025092217485449E269EA309E2597D788&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759139334&amp;x-signature=PcdUwshkUQyRcEsuFDoZW0tR5xg%3D" alt="三角洲行动游戏画面" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-dark/80 via-dark/60 to-secondary"></div>
+        </div>
+        <div class="container mx-auto px-4 z-10 text-center">
+            <!-- 删除了"高清图片集"文字 -->
+            <h1 class="text-[clamp(2rem,5vw,4rem)] font-bold mb-6 font-display leading-tight">
+                三角洲行动
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-300 mb-8 max-w-2xl mx-auto">
+                精选25张《三角洲行动》高清图片，包含角色、武器、场景和游戏精彩瞬间
+            </p>
+            <a href="#gallery" class="inline-block bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-8 rounded-md transition-all shadow-lg hover:shadow-primary/30 transform hover:-translate-y-1">
+                浏览图片 <i class="fa fa-images ml-2"></i>
+            </a>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#gallery" class="text-2xl text-white">
+                <i class="fa fa-angle-down"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- 图片展示区 -->
+    <section id="gallery" class="py-16 bg-secondary">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 font-display">游戏图片展示</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    精选25张《三角洲行动》高清图片，点击任意图片可查看大图
+                </p>
+            </div>
+            
+            <!-- 图片网格 - 25张图片 -->
+            <div id="imageContainer" class="image-grid">
+                <!-- 图片1 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1074/600/400" alt="三角洲行动角色展示" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">特种部队士兵</h3>
+                        <p class="text-gray-400 text-sm">精英作战单位角色展示</p>
+                    </div>
+                </div>
+                
+                <!-- 图片2 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1062/600/400" alt="三角洲行动战术场景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">战术部署</h3>
+                        <p class="text-gray-400 text-sm">团队协作制定作战计划</p>
+                    </div>
+                </div>
+                
+                <!-- 图片3 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1059/600/400" alt="三角洲行动武器展示" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">突击步枪</h3>
+                        <p class="text-gray-400 text-sm">多功能主战武器细节</p>
+                    </div>
+                </div>
+                
+                <!-- 图片4 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1047/600/400" alt="三角洲行动狙击武器" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">狙击步枪</h3>
+                        <p class="text-gray-400 text-sm">远程精确打击武器</p>
+                    </div>
+                </div>
+                
+                <!-- 图片5 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1036/600/400" alt="三角洲行动城市地图" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">城市战场</h3>
+                        <p class="text-gray-400 text-sm">巷战与城市突击场景</p>
+                    </div>
+                </div>
+                
+                <!-- 图片6 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1039/600/400" alt="三角洲行动丛林地图" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">丛林地带</h3>
+                        <p class="text-gray-400 text-sm">茂密植被中的隐蔽作战</p>
+                    </div>
+                </div>
+                
+                <!-- 图片7 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1069/600/400" alt="三角洲行动战斗场景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">激烈战斗</h3>
+                        <p class="text-gray-400 text-sm">多人团队协作战斗画面</p>
+                    </div>
+                </div>
+                
+                <!-- 图片8 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1071/600/400" alt="三角洲行动任务完成" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">任务完成</h3>
+                        <p class="text-gray-400 text-sm">成功完成特种作战任务</p>
+                    </div>
+                </div>
+                
+                <!-- 图片9 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1058/600/400" alt="三角洲行动战术画面" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">战术配合</h3>
+                        <p class="text-gray-400 text-sm">团队成员协同作战</p>
+                    </div>
+                </div>
+                
+                <!-- 图片10 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1066/600/400" alt="三角洲行动装备展示" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">战术装备</h3>
+                        <p class="text-gray-400 text-sm">特种作战装备细节</p>
+                    </div>
+                </div>
+                
+                <!-- 图片11 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1070/600/400" alt="三角洲行动夜间作战" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">夜间行动</h3>
+                        <p class="text-gray-400 text-sm">夜色掩护下的突袭</p>
+                    </div>
+                </div>
+                
+                <!-- 图片12 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1072/600/400" alt="三角洲行动角色装备" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">装备细节</h3>
+                        <p class="text-gray-400 text-sm">角色装备特写展示</p>
+                    </div>
+                </div>
+                
+                <!-- 图片13 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1055/600/400" alt="三角洲行动基地场景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">作战基地</h3>
+                        <p class="text-gray-400 text-sm">特种部队指挥中心</p>
+                    </div>
+                </div>
+                
+                <!-- 图片14 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1040/600/400" alt="三角洲行动侦察兵" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">侦察兵</h3>
+                        <p class="text-gray-400 text-sm">战场情报收集专家</p>
+                    </div>
+                </div>
+                
+                <!-- 图片15 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1060/600/400" alt="三角洲行动重型武器" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">重型机枪</h3>
+                        <p class="text-gray-400 text-sm">火力支援武器系统</p>
+                    </div>
+                </div>
+                
+                <!-- 图片16 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1043/600/400" alt="三角洲行动沙漠地图" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">沙漠基地</h3>
+                        <p class="text-gray-400 text-sm">干旱地区的军事设施</p>
+                    </div>
+                </div>
+                
+                <!-- 图片17 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1063/600/400" alt="三角洲行动夜间截图" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">夜间突袭</h3>
+                        <p class="text-gray-400 text-sm">夜色中的秘密行动</p>
+                    </div>
+                </div>
+                
+                <!-- 图片18 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1044/600/400" alt="三角洲行动室内场景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">室内作战</h3>
+                        <p class="text-gray-400 text-sm">建筑内近距离战斗</p>
+                    </div>
+                </div>
+                
+                <!-- 图片19 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1041/600/400" alt="三角洲行动武器库" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">武器库</h3>
+                        <p class="text-gray-400 text-sm">多样化武器选择</p>
+                    </div>
+                </div>
+                
+                <!-- 图片20 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1051/600/400" alt="三角洲行动直升机支援" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">空中支援</h3>
+                        <p class="text-gray-400 text-sm">直升机战术支援</p>
+                    </div>
+                </div>
+                
+                <!-- 图片21 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1054/600/400" alt="三角洲行动雪地场景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">雪地战场</h3>
+                        <p class="text-gray-400 text-sm">严寒环境作战</p>
+                    </div>
+                </div>
+                
+                <!-- 图片22 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1053/600/400" alt="三角洲行动指挥官" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">指挥官</h3>
+                        <p class="text-gray-400 text-sm">团队战术指挥</p>
+                    </div>
+                </div>
+                
+                <!-- 图片23 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1067/600/400" alt="三角洲行动爆炸场景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">爆炸瞬间</h3>
+                        <p class="text-gray-400 text-sm">激烈战斗中的爆炸效果</p>
+                    </div>
+                </div>
+                
+                <!-- 图片24 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1057/600/400" alt="三角洲行动狙击场景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">狙击阵地</h3>
+                        <p class="text-gray-400 text-sm">远程精确打击位置</p>
+                    </div>
+                </div>
+                
+                <!-- 图片25 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-zoom h-64">
+                        <img src="https://picsum.photos/id/1050/600/400" alt="三角洲行动团队合影" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">作战小队</h3>
+                        <p class="text-gray-400 text-sm">精英特种部队团队</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于游戏 -->
+    <section id="about" class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-6 font-display">关于《三角洲行动》</h2>
+                    <p class="text-gray-300 mb-4 leading-relaxed">
+                        《三角洲行动》是一款以现代军事为背景的战术射击游戏，玩家将扮演特种部队成员，执行各种高风险的作战任务。游戏以其真实的武器系统、丰富的战术选择和沉浸式的战斗体验而受到玩家喜爱。
+                    </p>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        游戏包含多种游戏模式，从单人剧情任务到多人团队对战，满足不同玩家的需求。精细的画面表现和真实的物理效果，让玩家仿佛置身于真实的战场环境中。
+                    </p>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-secondary p-4 rounded-lg text-center">
+                            <i class="fa fa-users text-primary text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">多人协作</div>
+                        </div>
+                        <div class="bg-secondary p-4 rounded-lg text-center">
+                            <i class="fa fa-crosshairs text-primary text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">真实武器</div>
+                        </div>
+                        <div class="bg-secondary p-4 rounded-lg text-center">
+                            <i class="fa fa-map text-primary text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">多样地图</div>
+                        </div>
+                        <div class="bg-secondary p-4 rounded-lg text-center">
+                            <i class="fa fa-line-chart text-primary text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">战术系统</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="inline-block bg-primary hover:bg-primary/90 text-white font-semibold py-2 px-6 rounded-md transition-all shadow-md hover:shadow-primary/20">
+                        访问官方网站 <i class="fa fa-external-link ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <img src="https://picsum.photos/id/1066/600/800" alt="三角洲行动游戏画面" class="rounded-lg shadow-lg w-full h-64 object-cover">
+                        <img src="https://picsum.photos/id/1070/600/400" alt="三角洲行动游戏画面" class="rounded-lg shadow-lg w-full h-40 object-cover">
+                    </div>
+                    <div class="space-y-4 mt-8">
+                        <img src="https://picsum.photos/id/1072/600/400" alt="三角洲行动游戏画面" class="rounded-lg shadow-lg w-full h-40 object-cover">
+                        <img src="https://picsum.photos/id/1055/600/800" alt="三角洲行动游戏画面" class="rounded-lg shadow-lg w-full h-64 object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 订阅区域 -->
+    <section class="py-12 bg-secondary">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto bg-dark rounded-xl p-8 shadow-lg border border-gray-800">
+                <div class="text-center mb-6">
+                    <h3 class="text-xl font-bold mb-2 font-display">订阅最新游戏资讯</h3>
+                    <p class="text-gray-400">获取《三角洲行动》最新更新和游戏动态</p>
+                </div>
+                
+                <form class="flex flex-col sm:flex-row gap-3">
+                    <input type="email" placeholder="输入您的邮箱地址" class="flex-1 px-4 py-3 bg-secondary border border-gray-700 rounded-md focus:outline-none focus:border-primary transition-colors">
+                    <button type="submit" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-md transition-colors whitespace-nowrap">
+                        立即订阅 <i class="fa fa-paper-plane ml-1"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark border-t border-gray-800 py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-6 md:mb-0">
+                    <!-- 页脚显示三角洲行动图标 -->
+                    <img src="delta-icon.png" alt="三角洲行动图标" class="w-8 h-8 rounded-full">
+                    <span class="text-lg font-bold font-display">三角洲行动</span>
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fa fa-weibo text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fa fa-weixin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fa fa-youtube-play text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fa fa-discord text-xl"></i>
+                    </a>
+                </div>
+                
+                <div class="text-gray-500 text-sm text-center md:text-right">
+                    <p>© 2023 《三角洲行动》图片展示站</p>
+                    <p class="mt-1">所有图片版权归游戏官方所有</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 图片查看器模态框 -->
+    <div id="imageViewer" class="fixed inset-0 bg-black/95 z-50 hidden items-center justify-center">
+        <button id="closeViewer" class="absolute top-6 right-6 text-white text-4xl hover:text-primary transition-colors z-10">
+            <i class="fa fa-times"></i>
+        </button>
+        <button id="prevImage" class="absolute left-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-primary transition-colors z-10">
+            <i class="fa fa-angle-left"></i>
+        </button>
+        <button id="nextImage" class="absolute right-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-primary transition-colors z-10">
+            <i class="fa fa-angle-right"></i>
+        </button>
+        <img id="viewerImage" src="" alt="图片预览" class="max-w-[90%] max-h-[90vh] object-contain">
+        <div class="absolute bottom-8 left-0 right-0 text-center text-white z-10">
+            <h3 id="viewerTitle" class="text-xl font-bold"></h3>
+            <p id="viewerDesc" class="text-gray-300 mt-1"></p>
+        </div>
+    </div>
+
+    <script>
+        // 移动端菜单切换
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+            } else {
+                mobileMenuBtn.innerHTML = '<i class="fa fa-times"></i>';
+            }
+        });
+        
+        // 图片查看器功能
+        const imageViewer = document.getElementById('imageViewer');
+        const viewerImage = document.getElementById('viewerImage');
+        const viewerTitle = document.getElementById('viewerTitle');
+        const viewerDesc = document.getElementById('viewerDesc');
+        const closeViewer = document.getElementById('closeViewer');
+        const prevImage = document.getElementById('prevImage');
+        const nextImage = document.getElementById('nextImage');
+        let currentImageIndex = 0;
+        const images = [];
+        
+        // 获取所有图片卡片
+        const imageCards = document.querySelectorAll('.image-card');
+        
+        // 收集所有图片信息
+        imageCards.forEach((card, index) => {
+            const img = card.querySelector('img');
+            const title = card.querySelector('h3').textContent;
+            const desc = card.querySelector('p').textContent;
+            
+            images.push({
+                src: img.src,
+                alt: img.alt,
+                title: title,
+                desc: desc
+            });
+            
+            // 添加点击事件
+            card.addEventListener('click', () => {
+                openImageViewer(index);
+            });
+        });
+        
+        // 打开图片查看器
+        function openImageViewer(index) {
+            currentImageIndex = index;
+            const image = images[index];
+            
+            viewerImage.src = image.src;
+            viewerImage.alt = image.alt;
+            viewerTitle.textContent = image.title;
+            viewerDesc.textContent = image.desc;
+            
+            imageViewer.classList.remove('hidden');
+            imageViewer.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 关闭图片查看器
+        closeViewer.addEventListener('click', () => {
+            imageViewer.classList.add('hidden');
+            imageViewer.classList.remove('flex');
+            document.body.style.overflow = '';
+        });
+        
+        // 上一张图片
+        prevImage.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            const image = images[currentImageIndex];
+            
+            viewerImage.src = image.src;
+            viewerImage.alt = image.alt;
+            viewerTitle.textContent = image.title;
+            viewerDesc.textContent = image.desc;
+        });
+        
+        // 下一张图片
+        nextImage.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            const image = images[currentImageIndex];
+            
+            viewerImage.src = image.src;
+            viewerImage.alt = image.alt;
+            viewerTitle.textContent = image.title;
+            viewerDesc.textContent = image.desc;
+        });
+        
+        // 点击空白处关闭
+        imageViewer.addEventListener('click', (e) => {
+            if (e.target === imageViewer) {
+                imageViewer.classList.add('hidden');
+                imageViewer.classList.remove('flex');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (imageViewer.classList.contains('flex')) {
+                if (e.key === 'Escape') {
+                    imageViewer.classList.add('hidden');
+                    imageViewer.classList.remove('flex');
+                    document.body.style.overflow = '';
+                } else if (e.key === 'ArrowLeft') {
+                    prevImage.click();
+                } else if (e.key === 'ArrowRight') {
+                    nextImage.click();
+                }
+            }
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动菜单（如果打开）
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+                }
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body></html>
