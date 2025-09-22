@@ -1,0 +1,546 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三角洲行动 - 图片展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e53e3e', // 游戏主题红色
+                        secondary: '#1a202c', // 深色背景
+                        accent: '#4299e1', // 强调色
+                        dark: '#171923', // 更深的背景色
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif']
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .image-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* 适配11:16比例调整宽度 */
+                gap: 1.5rem;
+            }
+            .image-card {
+                transition: none;
+            }
+            .image-card:hover {
+                transform: none;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+            .img-container {
+                aspect-ratio: 11/16; /* 设置为宽11:高16的比例 */
+                overflow: hidden;
+            }
+            .img-container img {
+                transition: none;
+            }
+            .img-container img:hover {
+                transform: none;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-secondary text-gray-100 min-h-screen">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-dark/90 backdrop-blur-md shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/f46ea03b55c247909badbfc51614ddc2~tplv-a9rns2rl98-image.image?rcl=20250922180959800449AC870646260653&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759140600&amp;x-signature=MWUvryhz%2FXtV72Yb%2FoChkm6CpSA%3D" alt="三角洲行动图标" class="w-10 h-10 rounded-full">
+                <h1 class="text-2xl font-bold font-display tracking-wider">三角洲行动</h1>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="hover:text-primary transition-colors">首页</a>
+                <a href="#gallery" class="text-primary font-medium">图片展示</a>
+                <a href="#about" class="hover:text-primary transition-colors">关于游戏</a>
+                <a href="#" class="hover:text-primary transition-colors">官方网站</a>
+            </div>
+            
+            <button id="mobileMenuBtn" class="md:hidden text-xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="md:hidden hidden bg-dark/95 backdrop-blur-md border-t border-gray-800">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#" class="py-2 hover:text-primary transition-colors">首页</a>
+                <a href="#gallery" class="py-2 text-primary font-medium">图片展示</a>
+                <a href="#about" class="py-2 hover:text-primary transition-colors">关于游戏</a>
+                <a href="#" class="py-2 hover:text-primary transition-colors">官方网站</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <header class="relative h-[70vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/13a6595830714f5788363d3ceba1d291~tplv-a9rns2rl98-image.image?rcl=2025092217485449E269EA309E2597D788&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759139334&amp;x-signature=PcdUwshkUQyRcEsuFDoZW0tR5xg%3D" alt="三角洲行动游戏画面" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-dark/80 via-dark/60 to-secondary"></div>
+        </div>
+        <div class="container mx-auto px-4 z-10 text-center">
+            <h1 class="text-[clamp(2rem,5vw,4rem)] font-bold mb-6 font-display leading-tight">三角洲行动</h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-300 mb-8 max-w-2xl mx-auto">精选《三角洲行动》图片，包含时间/地点、首次解锁时间/地点</p>
+            <a href="#gallery" class="inline-block bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-8 rounded-md transition-all shadow-lg hover:shadow-primary/30 transform hover:-translate-y-1">
+                浏览图片 <i class="fa fa-images ml-2"></i>
+            </a>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#gallery" class="text-2xl text-white">
+                <i class="fa fa-angle-down"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- 图片展示区（11:16比例 + 无交互） -->
+    <section id="gallery" class="py-16 bg-secondary">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 font-display">游戏图片展示</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    精选25张《三角洲行动》图片（宽11:高16比例）
+                </p>
+            </div>
+            
+            <!-- 图片网格 - 25张图片 -->
+            <div id="imageContainer" class="image-grid">
+                <!-- 图片1 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/10b4a8c6ccc74a9491c271cc98dc4b81~tplv-a9rns2rl98-image.image?rcl=20250922181306B9CE17FA3A49BA54E162&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759140786&amp;x-signature=Pw3MROL4zcEMW5nlntP%2BwZoJQs8%3D" alt="高速磁盘阵列" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">高速磁盘阵列</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.03.15 | 解锁地点：废弃工厂</p>
+                    </div>
+                </div>
+                
+                <!-- 图片2 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/a8b52a37de7442929caaa4dc13dcebbc~tplv-a9rns2rl98-image.image?rcl=202509221839437059C815A3D9198E7105&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142384&amp;x-signature=2GbAv%2FpwRa2HDq01NWF5Y95Ynq4%3D" alt="战术部署图" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">至纯源石</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-08-07
+解锁地点:巴克什-绝密</p>
+                    </div>
+                </div>
+                
+                <!-- 图片3 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/c0db758260c14e8098581fef5a187d5b~tplv-a9rns2rl98-image.image?rcl=20250922184046E6F4C75217E3A93360F3&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142446&amp;x-signature=dhtwmPTDGT3gvANRFpzop4EN2JQ%3D" alt="突击步枪M4A1" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">炫彩克小圈</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-08-08
+解锁地点:巴克什-绝密</p>
+                    </div>
+                </div>
+                
+                <!-- 图片4 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/40372a54b59a412fa778f616950546ca~tplv-a9rns2rl98-image.image?rcl=202509221841583601EFB6E04EF9D8EFB9&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142519&amp;x-signature=VdNm0fBn5bpnMJKddJO6I7%2FgYXQ%3D" alt="狙击步枪AWM" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">手办-阿米娅(近
+卫)</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-09-14
+解锁地点:航天基地-绝密</p>
+                    </div>
+                </div>
+                
+                <!-- 图片5 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/627aee0f4b854c778ec3e05c2a31f074~tplv-a9rns2rl98-image.image?rcl=202509221843012797D2DEA7068553A9EF&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142582&amp;x-signature=yEHcWUJIGlCoPlge8BNd7oiCbk4%3D" alt="城市战场全景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">军用控制终端</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-07-18
+解锁地点:零号大坝-机密</p>
+                    </div>
+                </div>
+                
+                <!-- 图片6 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/a3d895cf72a0418f91b60ac8831f3177~tplv-a9rns2rl98-image.image?rcl=20250922184334293D4D6833AEAC6D9F77&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142615&amp;x-signature=tLVnuU6UwKTGpUcDYYDZN1f1EBc%3D" alt="丛林隐蔽点" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">呼吸机</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-07-17
+解锁地点:零号大坝-机密</p>
+                    </div>
+                </div>
+                
+                <!-- 图片7 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/564cee4649914b5ca83ba40cd123fd30~tplv-a9rns2rl98-image.image?rcl=202509221844007DFB18140AFAB57A33A2&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142641&amp;x-signature=n8vr3IzWfzGpq%2Fz%2BRSMaKThsVSQ%3D" alt="团队战斗瞬间" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">黄金瞪羚</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-07-16
+解锁地点:长弓溪谷-常规</p>
+                    </div>
+                </div>
+                
+                <!-- 图片8 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/615df9e0364d4e01b3fab6446e79d34e~tplv-a9rns2rl98-image.image?rcl=20250922184424C13926B189AE4C4E0114&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142665&amp;x-signature=ZmA1a%2FQHK87e4Cs4BSC0q%2FxjvF8%3D" alt="任务成功徽章" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">万足金条</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-07-17
+解锁地点:零号大坝-机密</p>
+                    </div>
+                </div>
+                
+                <!-- 图片9 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/219ca06eedc7467297d53c419258472d~tplv-a9rns2rl98-image.image?rcl=2025092218445190F0B5DA6D056559BF58&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142691&amp;x-signature=gRzA6zqjZdpxPXQRXujLOB94Pds%3D" alt="战术配合示意图" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">量子存储</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-07-16
+解锁地点:零号人坝-机密</p>
+                    </div>
+                </div>
+                
+                <!-- 图片10 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/f307ba5f19ca4f0780113e79c5e40875~tplv-a9rns2rl98-image.image?rcl=2025092218450695A68E6F13893CCCB525&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142707&amp;x-signature=n%2FXbATJmTLBH1RuYHsbtNUEibg0%3D" alt="战术装备套装" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">显卡</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-07-14
+解锁地点:零号大坝-常规</p>
+                    </div>
+                </div>
+                
+                <!-- 图片11 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/d28753176688407cac521c00827b71ce~tplv-a9rns2rl98-image.image?rcl=20250922184524747154872176A74F4B6F&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142724&amp;x-signature=SAx9aWT1qHUrVKmXWa8pwIKvQ9I%3D" alt="夜间行动夜视仪" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">奥莉薇娅香槟</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-07-27
+解锁地点:零号大坝-常规</p>
+                    </div>
+                </div>
+                
+                <!-- 图片12 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/726be6b32772465e82484d65289ce4e8~tplv-a9rns2rl98-image.image?rcl=2025092218454290811780628FB6420D65&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142743&amp;x-signature=7UI7KMysX2C19OSAL2rbh7jRIH8%3D" alt="装备细节特写" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">棘龙爪化石</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-07-15
+解锁地点:零号大坝-常规</p>
+                    </div>
+                </div>
+                
+                <!-- 图片13 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/5882ef3a42444fadae260407ff9e486c~tplv-a9rns2rl98-image.image?rcl=20250922184604D740AFB7BFC07E69AE7C&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142765&amp;x-signature=FqNeJIzN0VyCo0sze5vso3ejoxQ%3D" alt="作战基地内部" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">滑膛枪展品</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-07-17
+解锁地点:零号大坝-机密</p>
+                    </div>
+                </div>
+                
+                <!-- 图片14 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/95fbae5d64234d3ca0c7ad4cc42ef6f1~tplv-a9rns2rl98-image.image?rcl=202509221846258BD2D534130B0B2CC4B7&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759142786&amp;x-signature=1hnCT3HgzEGY%2FQHnF%2Fb%2F6VFXOTY%3D" alt="侦察兵装备" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">侦察兵装备</h3>
+                        <p class="text-gray-400 text-sm">首次解锁:2025-07-16
+解锁地点:巴克什-机密</p>
+                    </div>
+                </div>
+                
+                <!-- 图片15 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1060/1100/1600" alt="重型机枪M249" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">重型机枪M249</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.03.05 | 解锁地点：火力支援站</p>
+                    </div>
+                </div>
+                
+                <!-- 图片16 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1043/1100/1600" alt="沙漠基地哨所" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">沙漠基地哨所</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.01.18 | 解锁地点：沙漠战区</p>
+                    </div>
+                </div>
+                
+                <!-- 图片17 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1063/1100/1600" alt="夜间突袭路线图" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">夜间突袭路线图</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.04.28 | 解锁地点：情报中心</p>
+                    </div>
+                </div>
+                
+                <!-- 图片18 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1044/1100/1600" alt="室内作战场景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">室内作战场景</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.02.12 | 解锁地点：建筑训练场</p>
+                    </div>
+                </div>
+                
+                <!-- 图片19 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1041/1100/1600" alt="武器库全景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">武器库全景</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.03.25 | 解锁地点：主武器库</p>
+                    </div>
+                </div>
+                
+                <!-- 图片20 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1051/1100/1600" alt="直升机支援图" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">直升机支援图</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.05.08 | 解锁地点：空中指挥部</p>
+                    </div>
+                </div>
+                
+                <!-- 图片21 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1054/1100/1600" alt="雪地作战装备" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">雪地作战装备</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.02.08 | 解锁地点：雪地训练场</p>
+                    </div>
+                </div>
+                
+                <!-- 图片22 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1053/1100/1600" alt="指挥官制服" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">指挥官制服</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.01.30 | 解锁地点：指挥中心</p>
+                    </div>
+                </div>
+                
+                <!-- 图片23 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1067/1100/1600" alt="爆炸效果示意图" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">爆炸效果示意图</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.04.15 | 解锁地点：爆破训练场</p>
+                    </div>
+                </div>
+                
+                <!-- 图片24 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1057/1100/1600" alt="狙击阵地全景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">狙击阵地全景</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.03.12 | 解锁地点：狙击训练场</p>
+                    </div>
+                </div>
+                
+                <!-- 图片25 -->
+                <div class="image-card bg-dark rounded-lg overflow-hidden shadow-md">
+                    <div class="img-container">
+                        <img src="https://picsum.photos/id/1050/1100/1600" alt="作战小队合影" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">作战小队合影</h3>
+                        <p class="text-gray-400 text-sm">解锁时间：2024.05.15 | 解锁地点：基地广场</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于游戏 -->
+    <section id="about" class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-6 font-display">关于《三角洲行动》</h2>
+                    <p class="text-gray-300 mb-4 leading-relaxed">
+                        《三角洲行动》是一款以现代军事为背景的战术射击游戏，玩家将扮演特种部队成员，执行各种高风险的作战任务。游戏以其真实的武器系统、丰富的战术选择和沉浸式的战斗体验而受到玩家喜爱。
+                    </p>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        游戏包含多种游戏模式，从单人剧情任务到多人团队对战，满足不同玩家的需求。精细的画面表现和真实的物理效果，让玩家仿佛置身于真实的战场环境中。
+                    </p>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-secondary p-4 rounded-lg text-center">
+                            <i class="fa fa-users text-primary text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">多人协作</div>
+                        </div>
+                        <div class="bg-secondary p-4 rounded-lg text-center">
+                            <i class="fa fa-crosshairs text-primary text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">真实武器</div>
+                        </div>
+                        <div class="bg-secondary p-4 rounded-lg text-center">
+                            <i class="fa fa-map text-primary text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">多样地图</div>
+                        </div>
+                        <div class="bg-secondary p-4 rounded-lg text-center">
+                            <i class="fa fa-line-chart text-primary text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">战术系统</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="inline-block bg-primary hover:bg-primary/90 text-white font-semibold py-2 px-6 rounded-md transition-all shadow-md hover:shadow-primary/20">
+                        访问官方网站 <i class="fa fa-external-link ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <img src="https://picsum.photos/id/1066/600/800" alt="三角洲行动游戏画面" class="rounded-lg shadow-lg w-full h-64 object-cover">
+                        <img src="https://picsum.photos/id/1070/600/400" alt="三角洲行动游戏画面" class="rounded-lg shadow-lg w-full h-40 object-cover">
+                    </div>
+                    <div class="space-y-4 mt-8">
+                        <img src="https://picsum.photos/id/1072/600/400" alt="三角洲行动游戏画面" class="rounded-lg shadow-lg w-full h-40 object-cover">
+                        <img src="https://picsum.photos/id/1055/600/800" alt="三角洲行动游戏画面" class="rounded-lg shadow-lg w-full h-64 object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 订阅区域 -->
+    <section class="py-12 bg-secondary">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto bg-dark rounded-xl p-8 shadow-lg border border-gray-800">
+                <div class="text-center mb-6">
+                    <h3 class="text-xl font-bold mb-2 font-display">订阅最新游戏资讯</h3>
+                    <p class="text-gray-400">获取《三角洲行动》最新更新和游戏动态</p>
+                </div>
+                
+                <form class="flex flex-col sm:flex-row gap-3">
+                    <input type="email" placeholder="输入您的邮箱地址" class="flex-1 px-4 py-3 bg-secondary border border-gray-700 rounded-md focus:outline-none focus:border-primary transition-colors">
+                    <button type="submit" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-md transition-colors whitespace-nowrap">
+                        立即订阅 <i class="fa fa-paper-plane ml-1"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark border-t border-gray-800 py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-6 md:mb-0">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/f46ea03b55c247909badbfc51614ddc2~tplv-a9rns2rl98-image.image?rcl=20250922180959800449AC870646260653&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1759140600&amp;x-signature=MWUvryhz%2FXtV72Yb%2FoChkm6CpSA%3D" alt="三角洲行动图标" class="w-8 h-8 rounded-full">
+                    <span class="text-lg font-bold font-display">三角洲行动</span>
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fa fa-weibo text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fa fa-weixin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fa fa-youtube-play text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                        <i class="fa fa-discord text-xl"></i>
+                    </a>
+                </div>
+                
+                <div class="text-gray-500 text-sm text-center md:text-right">
+                    <p>© 2023 《三角洲行动》图片展示站</p>
+                    <p class="mt-1">所有图片版权归游戏官方所有</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+            } else {
+                mobileMenuBtn.innerHTML = '<i class="fa fa-times"></i>';
+            }
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+                }
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+
+</body></html>
